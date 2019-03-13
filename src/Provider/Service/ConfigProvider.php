@@ -11,6 +11,7 @@ namespace WPMit\Provider\Service;
 
 use Adbar\Dot;
 use WPMit\AbstractServiceProvider;
+use WPMit\ContainerInterface;
 
 /**
  * Class ConfigProvider
@@ -31,8 +32,14 @@ class ConfigProvider extends AbstractServiceProvider
 
         $container = $this->getContainer();
 
-        $container['dot'] = function () {
-            return new Dot();
+        $container['config'] = function (ContainerInterface $c) {
+            if ($c->has('config.defaults')) {
+                $defaults = $c->get('config.defaults');
+            } else {
+                $defaults = [];
+            }
+
+            return new Dot($defaults);
         };
     }
 }
