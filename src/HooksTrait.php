@@ -17,6 +17,8 @@
 
 namespace WPMit;
 
+use Closure;
+
 /**
  * Hooks trait.
  *
@@ -76,17 +78,15 @@ trait HooksTrait
      * @param string   $hook
      * @param callable $method
      * @param int      $priority
-     * @param int      $arg_count
      *
      * @return bool whether the function existed before it was removed
      */
-    protected function removeFilter($hook, $method, $priority = 10, $arg_count = 1)
+    protected function removeFilter($hook, $method, $priority = 10)
     {
         return remove_filter(
             $hook,
-            $this->mapFilter($this->getWpFilterId($hook, $method, $priority), $method, $arg_count),
-            $priority,
-            $arg_count
+            $this->mapFilter($this->getWpFilterId($hook, $method, $priority), $method, 1),
+            $priority
         );
     }
 
@@ -98,13 +98,12 @@ trait HooksTrait
      * @param string   $hook
      * @param callable $method
      * @param int      $priority
-     * @param int      $arg_count
      *
      * @return bool whether the function is removed
      */
-    protected function removeAction($hook, $method, $priority = 10, $arg_count = 1)
+    protected function removeAction($hook, $method, $priority = 10)
     {
-        return $this->removeFilter($hook, $method, $priority, $arg_count);
+        return $this->removeFilter($hook, $method, $priority);
     }
 
     /**
@@ -130,7 +129,7 @@ trait HooksTrait
      * @param  $method
      * @param  $arg_count
      *
-     * @return \Closure The callable actually attached to a WP hook
+     * @return Closure The callable actually attached to a WP hook
      */
     protected function mapFilter($id, $method, $arg_count)
     {
