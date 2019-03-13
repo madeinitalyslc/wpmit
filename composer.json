@@ -1,0 +1,52 @@
+{
+  "name": "madeinitalyslc/wpmit",
+  "description": "A base WordPress library.",
+  "license": "MIT",
+  "homepage": "https://github.com/madeinitalyslc/wpmit",
+  "authors": [{
+      "name": "Brady Vercher",
+      "email": "brady@blazersix.com",
+      "homepage": "https://www.cedaro.com/"
+    },
+    {
+      "name": "Pereira Pulido Nuno Ricardo",
+      "email": "r.pereira@madeinitalyslc.it",
+      "homepage": "https://madeinitalyslc.it"
+    }
+  ],
+  "support": {
+    "issues": "https://github.com/madeinitalyslc/wpmit/issues",
+    "source": "https://github.com/madeinitalyslc/wpmit"
+  },
+  "require": {
+    "php": ">=7.1.0",
+    "psr/container": "^1.0",
+    "vlucas/phpdotenv": "^3.3",
+    "pimple/pimple": "^3.2"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "*@stable",
+    "symfony/var-dumper": "^4.2",
+    "symfony/console": "^4.2"
+  },
+  "autoload": {
+    "psr-4": {
+      "WPMit\\": "src/"
+    },
+    "files": [
+      "helpers.php"
+    ]
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "WPMit\\Test\\": "tests/"
+    }
+  },
+  "scripts": {
+    "test": "./vendor/bin/phpunit --coverage-html coverage",
+    "var-dump-server": "php vendor/symfony/var-dumper/Resources/bin/var-dump-server"
+  },
+  "config": {
+    "process-timeout": 0
+  }
+}
