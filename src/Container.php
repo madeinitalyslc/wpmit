@@ -37,6 +37,15 @@ class Container extends PimpleContainer implements ContainerInterface
     {
         return $this->offsetExists($id);
     }
+
+    /**
+     * @param string $id
+     * @param mixed $value
+     */
+    public function set(string $id, $value)
+    {
+        $this->offsetSet($id, $value);
+    }
     
     /**
      * @param HookProviderInterface|ServiceProviderInterface $provider

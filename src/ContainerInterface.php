@@ -23,4 +23,11 @@ interface ContainerInterface extends PsrContainerInterface
      * @param array $values
      */
     public function register($provider, array $values = []);
+
+    /**
+     * @param string $key
+     * @param mixed $value
+     * @return mixed
+     */
+    public function set(string $key, $value);
 }
