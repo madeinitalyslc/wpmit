@@ -9,6 +9,13 @@
 
 namespace WPMit\Provider\Service;
 
+use Symfony\Component\VarDumper\Cloner\VarCloner;
+use Symfony\Component\VarDumper\Dumper\CliDumper;
+use Symfony\Component\VarDumper\Dumper\ContextProvider\CliContextProvider;
+use Symfony\Component\VarDumper\Dumper\ContextProvider\SourceContextProvider;
+use Symfony\Component\VarDumper\Dumper\HtmlDumper;
+use Symfony\Component\VarDumper\Dumper\ServerDumper;
+use Symfony\Component\VarDumper\VarDumper;
 use WPMit\AbstractServiceProvider;
 
 /**
@@ -23,19 +30,21 @@ class VarDumpServerProvider extends AbstractServiceProvider
      */
     public function register()
     {
-        if (!class_exists('\Symfony\Component\VarDumper\Cloner\VarCloner')) {
+        if (!class_exists(VarCloner::class)) {
             throw new \Exception('Missing symfony/var-dumper package.');
         }
         
-        $cloner = new \Symfony\Component\VarDumper\Cloner\VarCloner();
-        $fallbackDumper = \in_array(\PHP_SAPI, array('cli', 'phpdbg')) ? new \Symfony\Component\VarDumper\Dumper\CliDumper() : new \Symfony\Component\VarDumper\Dumper\HtmlDumper();
+        $cloner = new VarCloner();
+        $fallbackDumper = \in_array(\PHP_SAPI, array('cli', 'phpdbg')) ? new CliDumper() : new HtmlDumper();
 
-        $dumper = new \Symfony\Component\VarDumper\Dumper\ServerDumper(env('VAR_DUMP_SERVER_HOST', 'tcp://127.0.0.1:9912'), $fallbackDumper, [
-            'cli' => new \Symfony\Component\VarDumper\Dumper\ContextProvider\CliContextProvider(),
-            'source' => new \Symfony\Component\VarDumper\Dumper\ContextProvider\SourceContextProvider(),
+        $host = $this->getContainer()->has('var_dump_server.host') ? (string) $this->getContainer()->get('var_dump_server.host') : 'tcp://127.0.0.1:9912';
+
+        $dumper = new ServerDumper($host, $fallbackDumper, [
+            'cli' => new CliContextProvider(),
+            'source' => new SourceContextProvider(),
         ]);
 
-        \Symfony\Component\VarDumper\VarDumper::setHandler(function ($var) use ($cloner, $dumper) {
+        VarDumper::setHandler(function ($var) use ($cloner, $dumper) {
             $dumper->dump($cloner->cloneVar($var));
         });
     }

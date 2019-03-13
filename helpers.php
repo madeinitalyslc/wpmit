@@ -58,8 +58,8 @@ if (!function_exists('debug')) {
             $output = $output . $arg_output . ' ';
         }
 
-        $output = substr($output, 0, -1);
-        $output = substr($output, 0, 1024); // Restrict messages to 1024 characters in length
+        //$output = substr($output, 0, -1);
+        //$output = substr($output, 0, 1024); // Restrict messages to 1024 characters in length
 
         error_log('DEBUG: ' . $output);
     }
