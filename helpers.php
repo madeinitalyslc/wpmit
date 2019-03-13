@@ -34,7 +34,11 @@ if (!function_exists('debug')) {
 
         $bt = debug_backtrace();
 
-        $output = '[' . $bt[1]['function'] . '] ';
+        if (isset($bt[1]['class'])) {
+            $output = '[' . $bt[1]['class'] . '::' . $bt[1]['function'] . '] ';
+        } else {
+            $output = '[' . $bt[1]['function'] . '] ';
+        }
 
         for ($i = 0; $i < $num_args; ++$i) {
             $arg = $arg_list[$i];
