@@ -41,12 +41,13 @@ class Container extends PimpleContainer implements ContainerInterface
     /**
      * @param HookProviderInterface|ServiceProviderInterface $provider
      * @param array $values
+     * @return $this|PimpleContainer
      * @throws \Exception
      */
     public function register($provider, array $values = [])
     {
-        if (!$provider instanceof ServiceProviderInterface or !$provider instanceof HookProviderInterface) {
-            throw new \Exception('Accept only ServiceProviderInterface or HookProviderInterface implementation of <' . (string) $provider . '>.');
+        if (!$provider instanceof ServiceProviderInterface and !$provider instanceof HookProviderInterface) {
+            throw new \Exception('Accept only ServiceProviderInterface or HookProviderInterface implementation.');
         }
         
         if ($values) {
@@ -60,5 +61,7 @@ class Container extends PimpleContainer implements ContainerInterface
         }
         
         $provider->register();
+        
+        return $this;
     }
 }

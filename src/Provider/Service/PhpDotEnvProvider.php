@@ -26,7 +26,7 @@ class PhpDotEnvProvider extends AbstractServiceProvider
      */
     public function register()
     {
-        if (!class_exists('Dotenv')) {
+        if (!class_exists(Dotenv::class)) {
             throw new \Exception('Missing vlucas/phpdotenv package.');
         }
         

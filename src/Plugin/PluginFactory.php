@@ -20,7 +20,6 @@ class PluginFactory
      * @param string $slug
      * @param string|null $filename
      * @return Plugin
-     * @throws \Exception
      */
     public static function create(string $slug, string $filename = null)
     {
