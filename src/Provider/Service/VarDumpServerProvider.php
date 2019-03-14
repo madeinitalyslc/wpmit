@@ -33,11 +33,11 @@ class VarDumpServerProvider extends AbstractServiceProvider
         if (!class_exists(VarCloner::class)) {
             throw new \Exception('Missing symfony/var-dumper package.');
         }
-        
+
         $cloner = new VarCloner();
         $fallbackDumper = \in_array(\PHP_SAPI, array('cli', 'phpdbg')) ? new CliDumper() : new HtmlDumper();
 
-        $host = $this->getContainer()->has('var_dump_server.host') ? (string) $this->getContainer()->get('var_dump_server.host') : 'tcp://127.0.0.1:9912';
+        $host = $this->getContainer()->has('var_dump_server.host') ? (string)$this->getContainer()->get('var_dump_server.host') : 'tcp://127.0.0.1:9912';
 
         $dumper = new ServerDumper($host, $fallbackDumper, [
             'cli' => new CliContextProvider(),

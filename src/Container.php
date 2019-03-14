@@ -27,7 +27,7 @@ class Container extends PimpleContainer implements ContainerInterface
     {
         return $this->offsetGet($id);
     }
-    
+
     /**
      * @param string $id
      *
@@ -46,7 +46,7 @@ class Container extends PimpleContainer implements ContainerInterface
     {
         $this->offsetSet($id, $value);
     }
-    
+
     /**
      * @param HookProviderInterface|ServiceProviderInterface $provider
      * @param array $values
@@ -58,19 +58,19 @@ class Container extends PimpleContainer implements ContainerInterface
         if (!$provider instanceof ServiceProviderInterface and !$provider instanceof HookProviderInterface) {
             throw new \Exception('Accept only ServiceProviderInterface or HookProviderInterface implementation.');
         }
-        
+
         if ($values) {
             foreach ($values as $k => $v) {
                 $this->offsetSet($k, $v);
             }
         }
-        
+
         if ($provider instanceof ContainerAwareInterface) {
             $provider->setContainer($this);
         }
-        
+
         $provider->register();
-        
+
         return $this;
     }
 }

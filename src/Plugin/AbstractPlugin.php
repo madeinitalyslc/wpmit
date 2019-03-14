@@ -39,10 +39,10 @@ abstract class AbstractPlugin extends Container implements PluginInterface
             'plugin.slug' => $slug,
             'plugin.url' => plugin_dir_url($filename)
         ];
-        
+
         parent::__construct($defaults);
     }
-    
+
     /**
      * Retrieve the absolute path for the main plugin file.
      *
@@ -84,7 +84,7 @@ abstract class AbstractPlugin extends Container implements PluginInterface
     {
         return $this->get('plugin.filename');
     }
-    
+
     /**
      * Retrieve the plugin identifier.
      *

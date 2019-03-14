@@ -28,7 +28,7 @@ class PluginFactory
             $backtrace = debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT, 1);
             $filename = $backtrace[0]['file'];
         }
-        
+
         return new Plugin($slug, $filename);
     }
 }

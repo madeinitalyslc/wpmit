@@ -29,10 +29,10 @@ class PhpDotEnvProvider extends AbstractServiceProvider
         if (!class_exists(Dotenv::class)) {
             throw new \Exception('Missing vlucas/phpdotenv package.');
         }
-        
+
         if ($this->getContainer()->has('php_dot_env.directory')) {
             $dotenv = Dotenv::create($this->getContainer()->get('php_dot_env.directory'));
-    
+
             $dotenv->load();
         }
     }

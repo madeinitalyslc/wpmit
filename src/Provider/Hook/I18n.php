@@ -39,7 +39,7 @@ class I18n extends AbstractHookProvider
     {
         if ($this->getContainer()->has('i18n.basename') and $this->getContainer()->has('i18n.slug')) {
             $plugin_rel_path = dirname($this->getContainer()->get('i18n.basename')) . '/languages';
-    
+
             load_plugin_textdomain($this->getContainer()->get('i18n.slug'), false, $plugin_rel_path);
         }
     }

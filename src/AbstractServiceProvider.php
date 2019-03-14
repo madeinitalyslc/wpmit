@@ -17,7 +17,7 @@ namespace WPMit;
 abstract class AbstractServiceProvider implements ServiceProviderInterface, ContainerAwareInterface
 {
     use ContainerAwareTrait;
-    
+
     /**
      * Register Service Provider
      */
