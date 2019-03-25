@@ -9,7 +9,7 @@
 
 namespace WPMit\Provider\Hook;
 
-use WPMit\AbstractHookProvider;
+use WPMit\Contracts\Service\AbstractHookProvider;
 
 /**
  * Class I18n

@@ -9,8 +9,8 @@
 
 namespace WPMit\Provider\Service;
 
-use Dotenv\Dotenv;
-use WPMit\AbstractServiceProvider;
+use Symfony\Component\Dotenv\Dotenv;
+use WPMit\Contracts\Service\AbstractServiceProvider;
 
 /**
  * Class PhpDotEnvProvider
@@ -26,14 +26,10 @@ class PhpDotEnvProvider extends AbstractServiceProvider
      */
     public function register()
     {
-        if (!class_exists(Dotenv::class)) {
-            throw new \Exception('Missing vlucas/phpdotenv package.');
-        }
+        $container = $this->getContainer();
 
-        if ($this->getContainer()->has('php_dot_env.directory')) {
-            $dotenv = Dotenv::create($this->getContainer()->get('php_dot_env.directory'));
-
-            $dotenv->load();
+        if ($container->has('php_dot_env.directory')) {
+            (new Dotenv())->load($container->get('php_dot_env.directory') . '.env');
         }
     }
 }

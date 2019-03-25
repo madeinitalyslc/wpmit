@@ -9,9 +9,9 @@
 
 namespace WPMit\Provider\Service;
 
-use Adbar\Dot;
-use WPMit\AbstractServiceProvider;
-use WPMit\ContainerInterface;
+use Illuminate\Config\Repository;
+use Psr\Container\ContainerInterface;
+use WPMit\Contracts\Service\AbstractServiceProvider;
 
 /**
  * Class ConfigProvider
@@ -25,11 +25,6 @@ class ConfigProvider extends AbstractServiceProvider
      */
     public function register()
     {
-        if (!class_exists(Dot::class)) {
-            debug('Missing composer package <adbario/php-dot-notation>');
-            return;
-        }
-
         $container = $this->getContainer();
 
         $container['config'] = function (ContainerInterface $c) {
@@ -39,7 +34,7 @@ class ConfigProvider extends AbstractServiceProvider
                 $defaults = [];
             }
 
-            return new Dot($defaults);
+            return new Repository($defaults);
         };
     }
 }

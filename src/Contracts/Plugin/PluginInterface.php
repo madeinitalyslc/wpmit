@@ -13,16 +13,12 @@
  * @copyright 2019 Made In Italy SLC
  */
 
-namespace WPMit\Plugin;
-
-if (\interface_exists('PluginInterface')) {
-    return;
-}
+namespace WPMit\Contracts\Plugin;
 
 /**
- * Plugin interface.
+ * Interface PluginInterface
  *
- * @package WPMit\Plugin
+ * @package WPMit\Contracts\Plugin
  */
 interface PluginInterface
 {

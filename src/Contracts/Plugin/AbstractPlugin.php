@@ -13,36 +13,29 @@
  * @copyright 2019 Made In Italy SLC
  */
 
-namespace WPMit\Plugin;
+namespace WPMit\Contracts\Plugin;
 
-use WPMit\Container;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use WPMit\Contracts\Addon\AbstractAddon;
 
 /**
  * Class AbstractPlugin
  *
- * @package WPMit\Plugin
+ * @package WPMit\Contracts\Plugin
  */
-abstract class AbstractPlugin extends Container implements PluginInterface
+abstract class AbstractPlugin extends AbstractAddon implements PluginInterface
 {
-    /**
-     * AbstractPlugin constructor.
-     *
-     * @param string $slug
-     * @param string $filename
-     */
-    public function __construct(string $slug, string $filename)
+    public function __construct(array $values = array())
     {
-        $defaults = [
-            'plugin.basename' => plugin_basename($filename),
-            'plugin.directory' => plugin_dir_path($filename),
-            'plugin.filename' => $filename,
-            'plugin.slug' => $slug,
-            'plugin.url' => plugin_dir_url($filename)
-        ];
-
-        parent::__construct($defaults);
+        $values = array_merge([
+            'plugin.basename' => plugin_basename($values['filename']),
+            'plugin.directory' => plugin_dir_path($values['filename']),
+            'plugin.url' => plugin_dir_url($values['filename'])
+        ], $values);
+        
+        parent::__construct($values);
     }
-
+    
     /**
      * Retrieve the absolute path for the main plugin file.
      *
@@ -73,26 +66,6 @@ abstract class AbstractPlugin extends Container implements PluginInterface
     public function path($path = ''): string
     {
         return $this->get('plugin.directory') . ltrim($path, '/');
-    }
-
-    /**
-     * Retrieve the absolute path for the main plugin file.
-     *
-     * @return string
-     */
-    public function filename(): string
-    {
-        return $this->get('plugin.filename');
-    }
-
-    /**
-     * Retrieve the plugin identifier.
-     *
-     * @return string
-     */
-    public function slug(): string
-    {
-        return $this->get('plugin.slug');
     }
 
     /**

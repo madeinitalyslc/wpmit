@@ -16,7 +16,7 @@ use Symfony\Component\VarDumper\Dumper\ContextProvider\SourceContextProvider;
 use Symfony\Component\VarDumper\Dumper\HtmlDumper;
 use Symfony\Component\VarDumper\Dumper\ServerDumper;
 use Symfony\Component\VarDumper\VarDumper;
-use WPMit\AbstractServiceProvider;
+use WPMit\Contracts\Service\AbstractServiceProvider;
 
 /**
  * Class VarDumpServerProvider
@@ -33,11 +33,13 @@ class VarDumpServerProvider extends AbstractServiceProvider
         if (!class_exists(VarCloner::class)) {
             throw new \Exception('Missing symfony/var-dumper package.');
         }
+        
+        $container = $this->getContainer();
 
         $cloner = new VarCloner();
         $fallbackDumper = \in_array(\PHP_SAPI, array('cli', 'phpdbg')) ? new CliDumper() : new HtmlDumper();
 
-        $host = $this->getContainer()->has('var_dump_server.host') ? (string)$this->getContainer()->get('var_dump_server.host') : 'tcp://127.0.0.1:9912';
+        $host = $container->has('var_dump_server.host') ? (string) $container->get('var_dump_server.host') : 'tcp://127.0.0.1:9912';
 
         $dumper = new ServerDumper($host, $fallbackDumper, [
             'cli' => new CliContextProvider(),
